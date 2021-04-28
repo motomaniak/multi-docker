@@ -10,7 +10,7 @@ script:
   - docker run -e CI=true motomaniak/react-test npm test
 
 after_success:
-  - docker build -t motomaniak/mult-client ./client
+  - docker build -t motomaniak/multi-client ./client
   - docker build -t motomaniak/multi-nginx ./nginx
   - docker build -t motomaniak/multi-server ./server
   - docker build -t motomaniak/multi-worker ./worker
