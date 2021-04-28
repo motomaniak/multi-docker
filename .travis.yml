@@ -1,0 +1,25 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t motomaniak/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true motomaniak/react-test npm test
+
+after_success:
+  - build -t motomaniak/mult-client ./client
+  - build -t motomaniak/multi-nginx ./nginx
+  - build -t motomaniak/multi-server ./server
+  - build -t motomaniak/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push motomaniak/multi-client
+  - docker push motomaniak/multi-nginx
+  - docker push motomaniak/multi-server
+  - docker push motomaniak/multi-worker
+
+
