@@ -10,10 +10,10 @@ script:
   - docker run -e CI=true motomaniak/react-test npm test
 
 after_success:
-  - build -t motomaniak/mult-client ./client
-  - build -t motomaniak/multi-nginx ./nginx
-  - build -t motomaniak/multi-server ./server
-  - build -t motomaniak/multi-worker ./worker
+  - docker build -t motomaniak/mult-client ./client
+  - docker build -t motomaniak/multi-nginx ./nginx
+  - docker build -t motomaniak/multi-server ./server
+  - docker build -t motomaniak/multi-worker ./worker
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
